@@ -5,8 +5,6 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	<CETCompat>false</CETCompat>
-	<GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <CETCompat>false</CETCompat>
   </PropertyGroup>
-
 </Project>

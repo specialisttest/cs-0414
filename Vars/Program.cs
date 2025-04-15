@@ -270,6 +270,14 @@ namespace Vars
                 Point point = new(11, 22);
                 Console.WriteLine($"Point: {point.x}, {point.y}");
             }
+            {
+                Console.Write("Введите ваше имя: ");
+                string name = Console.ReadLine();
+                Console.Write("Введите ваш возраст: ");
+                int age = int.Parse(Console.ReadLine());
+                Console.WriteLine($"{name} - {age}");
+
+            }
 
 
 

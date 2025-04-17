@@ -1,11 +1,13 @@
 ﻿using System.Text;
 using static System.Math;
 
+using GraphObject;
+
 namespace OOP
 {
     public partial class Course
     { 
-        public string Teacher { get; set; }
+        public string? Teacher { get; set; }
 
         partial void Validate()
         {
@@ -44,6 +46,7 @@ namespace OOP
 
     public class Program
     {
+
         static void Main(string[] args)
         {
             string s = "hello sergey"; // Capitalize(s) == "Hello Sergey"
@@ -94,6 +97,94 @@ namespace OOP
             Console.WriteLine(person);
             Console.WriteLine($"{person.Name} - {person.Age}");
 
+            RemoteCourse rc1 = new RemoteCourse("Creating Services with C#", 40, "specialist.ru");
+            rc1.Show(); // RemoteCourse.Show() всегда
+            rc1.Connect();
+
+            Course course1 = rc1; // implicit conv ref
+            course1.Show(); // RemoteCourse.Show() - полиморфизм (полиморфный вызов метод)
+
+            course1 = c1;
+
+            course1.Show(); // Course.Show() - полиморфизм(полиморфный вызов метод)
+
+            // VMT
+            /* virtual (override)
+             * Class        Method      Address
+             * Course       Show        XXXX (Course.Show() )
+             * RemoteCourse Show        YYYY (RemoteCourse.Show())
+             */
+
+            //RemoteCourse rc2 = (RemoteCourse)course1; // explict conv ref
+            //rc2.Connect();
+
+            //if (course1 is RemoteCourse)
+            //{
+            //    RemoteCourse rc2 = (RemoteCourse)course1;
+            //    rc2.Connect();
+            //}
+
+            //if (course1 is RemoteCourse rc2)
+            //    rc2.Connect();
+
+            RemoteCourse rc2 = course1 as RemoteCourse;
+            //if (rc2 != null) rc2.Connect();
+            rc2?.Connect();
+
+            (course1 as RemoteCourse)?.Connect();
+
+            //rc1.Show(); 
+
+            Shape[] scene = {
+                new Point(10, 20, "red"),
+                new Circle(100, 200, 50, "green")
+            };
+
+            DrawScene(scene);
+
+            ScaleScene(scene, 1.5);
+
+            DrawScene(scene);
+
+            Circle circle = new Circle(10,10,10);
+            circle.Scale(2);
+            IScaleable sc1 = circle;
+            sc1.Scale(1.5);
+            sc1.Scale2();
+            
+            circle.Draw();
+
+            Star st = new Star();
+            //st.AddOne();
+            IMath m = st;
+            m.AddOne();
+            Console.WriteLine(st.num);
+            if (m is Star st2)
+                Console.WriteLine(st2.num);
         }
+        public static void ScaleScene(Shape[] scene, double factor)
+        {
+            foreach (Shape shape in scene)
+                if (shape is IScaleable sc)
+                    sc.Scale(factor); // полиморфизм
+                //(shape as IScaleable)?.Scale(factor);
+        }
+
+        public static void DrawScene(Shape[] scene)
+        {
+            foreach (Shape shape in scene)
+                shape.Draw(); // полиморфизм
+        }
+    }
+
+    struct Star : IMath
+    {
+        public int num;
+
+        public void AddOne() => num++;
+    }
+    interface IMath
+    {
+        void AddOne();
     }
 }

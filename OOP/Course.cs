@@ -2,7 +2,7 @@
 
 namespace OOP
 {
-    public partial class Course
+    public /* sealed */  partial class Course
     {
         //public readonly string Title;// = "Новый курс";
         //private string title;
@@ -17,7 +17,7 @@ namespace OOP
             private set  => title = value;
         }*/
 
-        // required - требует инициализации в блоке инициализации { Ttile = ".."}
+        // required - требует инициализации в блоке инициализации { Title = ".."}
         // даже если конструктор инициализирует
         public /*required*/ string Title { get; init; }// = "Новый курс";
 
@@ -43,7 +43,7 @@ namespace OOP
         }*/
 
         // auto property
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
 
         //private string description;
@@ -80,7 +80,7 @@ namespace OOP
 
         // Без модификатора доступа (private), не должен возращать значение (void)
         partial void Validate();
-        public void Show()
+        public virtual void Show()
         {
             Validate(); // компилятор пропустит вызов метода, если он остался не реализован
             // this - ссылка на объект, для которого вызван этот метод

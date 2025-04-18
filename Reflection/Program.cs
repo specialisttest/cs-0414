@@ -2,11 +2,22 @@
 
 namespace Reflection
 {
+    [AttributeUsage(AttributeTargets.Class)]
+    public class DeveloperAttribute : System.Attribute
+    {
+        public string Author { get; init; }
+        public DeveloperAttribute(string author)
+        { 
+            Author = author;
+        }
+    }
+    
     struct Coords 
     { 
         public int X { get; set; }
         public int Y { get; set; }
     }
+    [Developer("Sergey")]
     public class Person
     {
         public string Name { get; set; }
@@ -40,6 +51,11 @@ namespace Reflection
             MethodInfo[] ms = type.GetMethods();
             foreach (var mi in ms)
                 Console.WriteLine(mi.Name);
+
+            DeveloperAttribute? attr = type.GetCustomAttribute<DeveloperAttribute>();
+            if (attr != null)
+                Console.WriteLine("Type {0} has attribute with author {1}",
+                        type.FullName, attr.Author);
 
 
 

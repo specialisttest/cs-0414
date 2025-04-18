@@ -2,6 +2,7 @@
 using static System.Math;
 
 using GraphObject;
+using System.Text.Json;
 
 namespace OOP
 {
@@ -161,6 +162,36 @@ namespace OOP
             Console.WriteLine(st.num);
             if (m is Star st2)
                 Console.WriteLine(st2.num);
+
+            // Serialization using standart .net library
+            Circle crx = new Circle(5, 6, 7, "blue");
+            string data = JsonSerializer.Serialize(crx);
+            Console.WriteLine(data);
+            Circle restoredCircle = JsonSerializer.Deserialize<Circle>(data);
+            restoredCircle.Draw();
+
+            Point p1 = new Point(10, 20);
+            Point p2 = new Point(1, 2);
+            Point p3 = p1 + p2; //  Point.Add(p1, p2); 
+            Point p4 = 5 + p1;
+            p4 += 10; // p4 = p4 + 10;
+            p3.Draw();
+            p4.Draw();
+            (p1 - p2).Draw();
+            (-p1).Draw();
+            Point pp1 = new Point(10, 20);
+            Point pp2 = new Point(10, 20);
+            Console.WriteLine(pp1 == pp2);
+            Console.WriteLine(pp1 == null);
+            Console.WriteLine(p1 > p2);
+            double dist = (double)p1; // p1.Distance - explicit
+            //double dist2 = p1; // implicit
+
+            Console.WriteLine(p1[0]);
+            Console.WriteLine(p1[1]);
+
+            Console.WriteLine(p1["x"]);
+            Console.WriteLine(p1["y"]);
         }
         public static void ScaleScene(Shape[] scene, double factor)
         {
